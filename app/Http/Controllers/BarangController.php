@@ -52,7 +52,7 @@ class BarangController extends Controller
         return redirect()->route('item.index');
     }
 
-    public function detail($id_barang)
+    public function detail($id)
     {
         // $barang = Barang::select('nama_barang')->jenisBarang()->find($id_barang);
         // dd($barang);
@@ -71,8 +71,9 @@ class BarangController extends Controller
         //         ->first();
         // }
 
-        $jenisBarang = JenisBarang::find($id_barang);
-        $barang = $jenisBarang->Barang;
+        $perPage = 5;
+        $jenisBarang = JenisBarang::find($id);
+        $barang = $jenisBarang->Barang()->paginate($perPage);;
         // dd($barang);
 
 
@@ -110,9 +111,9 @@ class BarangController extends Controller
         $barang = Barang::findOrFail($id);
 
         if ($barang->delete()) {
-            return redirect(route('item.detail'))->with('success', 'Deleted!');
+            return redirect(route('item.index'))->with('success', 'Data has been Successfully Deleted!');
         }
 
-        return redirect(route('item.detail'))->with('error', 'Sorry, unable to delete this!');
+        return redirect(route('item.destroy'))->with('error', 'Sorry, unable to delete this!');
     }
 }

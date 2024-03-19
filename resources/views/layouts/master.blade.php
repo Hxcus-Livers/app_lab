@@ -180,7 +180,7 @@
                             <div class="dropdown-divider"></div>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
-                                <button class="dropdown-item has-icon text-danger" type="submit">
+                                <button class="dropdown-item has-icon text-danger bg-white" type="submit">
                                     <p style="font-size: 80%; margin-bottom: 0%;"> Logout</p>
                                 </button>
                             </form>

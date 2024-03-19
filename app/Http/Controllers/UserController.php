@@ -22,13 +22,14 @@ class UserController extends Controller
         return response(view('user.index', ['jenis_barang' => $jenis_barang]));
     }
 
-    public function detail($id_barang)
+    public function detail($id)
     {
-        $jenisBarang = JenisBarang::find($id_barang);
-        $barang = $jenisBarang->Barang;
+        $perPage = 5;
+        $jenisBarang = JenisBarang::find($id);
+        $barang = $jenisBarang->Barang()->paginate($perPage);;
         // dd($barang);
 
 
-        return view('user.detail', compact('barang'));
+        return view('item.detail', compact('barang'));
     }
 }

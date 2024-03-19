@@ -20,6 +20,7 @@ class Barang extends Model
         'jenis_barang_id',
         'nama_barang',
         'deskripsi',
+        'kondisi',
         'created_at',
         'updated_at'
     ];
