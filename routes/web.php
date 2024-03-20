@@ -50,10 +50,16 @@ Route::middleware([
             // return 'dashboard user';
             return view('user.dashboard_user');
         })->name('dashboard_user');
-        Route::get('/show-user', function () {
 
+        Route::get('/show-user', function () {
+            //
             return view('profile.show-user');
         })->name('profile.show-user');
+
+        Route::get('/pinjam-barang', function () {
+            //
+            return view('user.pinjam');
+        })->name('user.pinjam');
 
         Route::get('/user/barang', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/barang/{barang}', [UserController::class, 'detail'])->name('user.detail');

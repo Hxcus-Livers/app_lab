@@ -30,6 +30,6 @@ class UserController extends Controller
         // dd($barang);
 
 
-        return view('item.detail', compact('barang'));
+        return view('user.detail', compact('barang'));
     }
 }

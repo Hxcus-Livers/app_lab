@@ -9,7 +9,7 @@
       <h1>Table</h1>
       <div class="section-header-breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('dashboard_user') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-file"></i> Data Barang </li>
         </ol>
       </div>
@@ -46,23 +46,6 @@
                 </tbody>
               </table>
             </div>
-          </div>
-          <div class="card-footer text-right">
-            <nav class="d-inline-block">
-              <ul class="pagination mb-0">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
       </div>

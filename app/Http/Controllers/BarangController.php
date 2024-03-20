@@ -73,7 +73,7 @@ class BarangController extends Controller
 
         $perPage = 5;
         $jenisBarang = JenisBarang::find($id);
-        $barang = $jenisBarang->Barang()->paginate($perPage);;
+        $barang = $jenisBarang->Barang()->paginate($perPage);
         // dd($barang);
 
 

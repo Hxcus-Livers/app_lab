@@ -8,18 +8,18 @@
     <title>@yield('title')</title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="../assets/modules/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/modules/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css')}}">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="../assets/modules/jqvmap/dist/jqvmap.min.css">
-    <link rel="stylesheet" href="../assets/modules/weather-icon/css/weather-icons.min.css">
-    <link rel="stylesheet" href="../assets/modules/weather-icon/css/weather-icons-wind.min.css">
-    <link rel="stylesheet" href="../assets/modules/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="{{ asset('assets/modules/jqvmap/dist/jqvmap.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/weather-icon/css/weather-icons.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/weather-icon/css/weather-icons-wind.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css')}}">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/components.css')}}">
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -70,19 +70,19 @@
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-3-50.png" alt="product">
+                                    <img class="mr-3 rounded" width="30" src="{{ asset('assets/img/products/product-3-50.png')}}" alt="product">
                                     oPhone S9 Limited Edition
                                 </a>
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-2-50.png" alt="product">
+                                    <img class="mr-3 rounded" width="30" src="{{ asset('assets/img/products/product-2-50.png')}}" alt="product">
                                     Drone X2 New Gen-7
                                 </a>
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-1-50.png" alt="product">
+                                    <img class="mr-3 rounded" width="30" src="{{ asset('assets/img/products/product-1-50.png')}}" alt="product">
                                     Headphone Blitz
                                 </a>
                             </div>
@@ -110,7 +110,7 @@
                 </form>
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+                            <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
                         </a>
                         <div class=" dropdown-menu dropdown-menu-right">
@@ -138,7 +138,7 @@
                         <a href="{{ route('dashboard_user') }}">LAB</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="{{ route('dashboard_user') }}"><img src="../assets/img/logo-antarika.png" width="40%"></a>
+                        <a href="{{ route('dashboard_user') }}"><img src="{{ asset('assets/img/logo-antarika.png')}}" width="40%"></a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
@@ -149,6 +149,10 @@
                         <li class="menu-header">Stok</li>
                         <li>
                             <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-columns"></i> <span>Daftar Barang</span></a>
+                        </li>
+                        <li class="menu-header">Request</li>
+                        <li>
+                            <a class="nav-link" href="{{ route('user.pinjam') }}"><i class="fas fa-pencil-alt"></i> <span>Pinjam Barang</span></a>
                         </li>
                     </ul>
 
@@ -171,28 +175,28 @@
     </div>
 
     <!-- General JS Scripts -->
-    <script src="../assets/modules/jquery.min.js"></script>
-    <script src="../assets/modules/popper.js"></script>
-    <script src="../assets/modules/tooltip.js"></script>
-    <script src="../assets/modules/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
-    <script src="../assets/modules/moment.min.js"></script>
-    <script src="../assets/js/stisla.js"></script>
+    <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/popper.js') }}"></script>
+    <script src="{{ asset('assets/modules/tooltip.js') }}"></script>
+    <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
-    <script src="../assets/modules/simple-weather/jquery.simpleWeather.min.js"></script>
-    <script src="../assets/modules/chart.min.js"></script>
-    <script src="../assets/modules/jqvmap/dist/jquery.vmap.min.js"></script>
-    <script src="../assets/modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="../assets/modules/summernote/summernote-bs4.js"></script>
-    <script src="../assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+    <script src="{{ asset('assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/chart.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/jqvmap/dist/jquery.vmap.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+    <script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
+    <script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="../assets/js/page/index-0.js"></script>
+    <script src="{{ asset('assets/js/page/index-0.js') }}"></script>
 
     <!-- Template JS File -->
-    <script src="../assets/js/scripts.js"></script>
-    <script src="../assets/js/custom.js"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 </body>
 
 </html>

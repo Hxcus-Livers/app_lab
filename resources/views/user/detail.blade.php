@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 
 @section('title', 'Detail Barang')
 
@@ -9,8 +9,8 @@
             <h1>Table</h1>
             <div class="section-header-breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('item.index') }}"><i class="fas fa-file"></i> Daftar Barang </a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard_user') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('user.index') }}"><i class="fas fa-file"></i> Daftar Barang </a></li>
                     <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i> Detail Data</li>
                 </ol>
             </div>
