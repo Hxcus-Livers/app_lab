@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\RequestUser;
 use Illuminate\pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
-        Paginator::useBootstrapFour();    
+        Paginator::useBootstrapFour();
+
+        view()->composer('*', function ($view) {
+            $requestPeminjamanBelumDibaca = RequestUser::where('status', '=', 'pending')
+                ->where('dibaca', '=', false)
+                ->orderBy('id', 'desc')
+                ->take(5) // Ambil 5 request terbaru
+                ->get();
+
+            $view->with('requestPeminjamanBelumDibaca', $requestPeminjamanBelumDibaca);
+        });
     }
 }

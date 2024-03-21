@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 
 @section('title', 'Tambah Barang')
 
@@ -10,7 +10,7 @@
             <div class="section-header-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-plus"></i> Tambah Barang</li>
+                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-pencil-alt"></i> Pinjam Barang</li>
                 </ol>
             </div>
         </div>
@@ -35,28 +35,37 @@
                             </div>
                             @endif
 
+                            <form action="{{ route('request.store') }}" method="post"></form>
+                            @csrf
+
                             <div class="mb-3">
-                                <label for="jenis_barang_id" class="form-label">Jenis Barang</label>
-                                <select class="form-control" id="jenis_barang_id" name="jenis_barang_id">
-                                    @foreach ($jenisBarang as $jenisBarang)
-                                    <option value="{{ $jenisBarang->id }}">{{ $jenisBarang->nama_jenis_barang }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="nama_barang" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
                             </div>
 
                             <div class="mb-3">
-                                <label for="nama_barang" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" id="nama_barang" name="nama_barang" value="{{ old('nama_barang') }}">
+                                <label for="kelas" class="form-label">Kelas</label>
+                                <input type="text" class="form-control" id="kelas" name="kelas" value="{{ old('kelas') }}">
                             </div>
 
                             <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3">{{ old('alamat') }}</textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label for="total" class="form-label">Jumlah</label>
-                                <input type="number" class="form-control" id="total" name="total" value="{{ old('total') }}">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="barang_dipinjam" class="form-label">Barang yang di Pinjam</label>
+                                <textarea class="form-control" id="barang_dipinjam" name="barang_dipinjam" rows="3">{{ old('barang_dipinjam') }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="total_barang" class="form-label">Total Barang yang di Pinjam</label>
+                                <input type="number" class="form-control" id="total_barang" name="total_barang" value="{{ old('total_barang') }}">
                             </div>
 
                             <button type="submit" class="btn btn-primary">Simpan</button>

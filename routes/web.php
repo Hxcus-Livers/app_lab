@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use App\Models\Barang;
+use App\Models\RequestUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,10 @@ Route::middleware([
         Route::post('/barang/store', [BarangController::class, 'store'])->name('item.store');
         Route::get('/barang/{barang}', [BarangController::class, 'detail'])->name('item.detail');
         Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('item.destroy');
+
+        Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+        Route::get('/request/show', [RequestController::class, 'show'])->name('request.show');
+
         // laporan
         Route::get('/laporan', function () {
             // return 'dashboard admin';
@@ -63,5 +69,8 @@ Route::middleware([
 
         Route::get('/user/barang', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/barang/{barang}', [UserController::class, 'detail'])->name('user.detail');
+
+        Route::get('/request/create', [RequestController::class, 'create'])->name('request.create');
+        Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
     });
 });

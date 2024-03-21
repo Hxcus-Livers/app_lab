@@ -1,16 +1,18 @@
       <!-- Main Content -->
-      @extends('..layouts.master')
+      @extends('layouts.master')
 
-@section('title', 'Profile')
+      @section('title', 'Profile')
 
-@section('content')
+      @section('content')
       <div class="main-content">
         <section class="section">
           <div class="section-header">
             <h1>Profile</h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item">Profile</div>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-user"></i> Profile</li>
+              </ol>
             </div>
           </div>
           <div class="section-body">
@@ -21,23 +23,23 @@
 
             <x-app-layout>
 
-    <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                @livewire('profile.update-profile-information-form')
+              <div>
+                <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                  @if (Laravel\Fortify\Features::canUpdateProfileInformation())
+                  @livewire('profile.update-profile-information-form')
 
-                
-            @endif
 
-            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-                <div class="mt-10 sm:mt-0">
+                  @endif
+
+                  @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
+                  <div class="mt-10 sm:mt-0">
                     @livewire('profile.update-password-form')
-                </div>
+                  </div>
 
-                <x-section-border />
-            @endif
+                  <x-section-border />
+                  @endif
 
-            {{-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+                  {{-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')
                 </div>
@@ -56,12 +58,12 @@
                     @livewire('profile.delete-user-form')
                 </div>
             @endif --}}
-        </div>
-    </div>
-</x-app-layout>
-            </div>
+                </div>
+              </div>
+            </x-app-layout>
           </div>
-        </section>
       </div>
-      
+      </section>
+      </div>
+
       @endsection

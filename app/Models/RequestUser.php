@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequestUser extends Model
 {
-    protected $table = 'request_users';
+    protected $table = 'peminjam';
 
     protected $fillabel = [
         'id',
