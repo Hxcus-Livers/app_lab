@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,12 +22,35 @@ class RequestController extends Controller
     //     return view('layouts.master', compact('requestPeminjaman'));
     // }
 
+    private function diffForHumans($date) {
+        if (!$date) {
+          return 'N/A (No date available)';
+        }
+      
+        $now = new DateTime();
+        $interval = $now->diff($date);
+        $elapsed = $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
+      
+        if ($elapsed < 1) {
+          return 'Baru saja';
+        } elseif ($elapsed < 60) {
+          return $elapsed . ' menit yang lalu';
+        } elseif ($elapsed < 120) {
+          return 'Sekitar 1 jam yang lalu';
+        } elseif ($elapsed < (24 * 60)) {
+          return round($elapsed / 60) . ' jam yang lalu';
+        } elseif ($elapsed < (2 * 24 * 60)) {
+          return 'Kemarin';
+        } else {
+          return round($elapsed / (24 * 60)) . ' hari yang lalu';
+        }
+      }      
 
 
     public function create()
     {
         $request_user = RequestUser::all();
-        return view('user.pinjam', compact('request_user'));
+        return view('request.create', compact('request_user'));
     }
 
     public function store(Request $request)
@@ -35,7 +60,6 @@ class RequestController extends Controller
             'nama' => 'required|string|max:255',
             'kelas' => 'required|string|max:10',
             'alamat' => 'required|string',
-            'email' => 'required|email|unique:peminjam',
             'barang_dipinjam' => 'required|string',
             'total_barang' => 'required|integer',
         ]);
@@ -45,14 +69,14 @@ class RequestController extends Controller
         RequestUser::create($validatedData);
 
         // Buat notifikasi untuk admin
-        $notifikasi = [
-            'judul' => 'Permintaan Peminjaman Baru',
-            'isi' => 'Permintaan peminjaman baru dari ' . $validatedData['nama'],
-        ];
+        // $notifikasi = [
+        //     'judul' => 'Permintaan Peminjaman Baru',
+        //     'isi' => 'Permintaan peminjaman baru dari ' . $validatedData['nama'],
+        // ];
 
 
         // Tampilkan pesan sukses
-        return redirect()->route('user.peminjam')->with('success', 'Permintaan peminjaman berhasil dikirim!');
+        return redirect()->route('user.pinjam')->with('success', 'Permintaan peminjaman berhasil dikirim!');
     }
 
     public function show(RequestUser $request_user)

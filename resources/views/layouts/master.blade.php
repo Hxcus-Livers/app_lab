@@ -32,6 +32,7 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
+    @helper(App\Helpers\diffForHumans)
     <!-- /END GA -->
 </head>
 
@@ -124,7 +125,9 @@
                                     </div>
                                     <div class="dropdown-item-desc">
                                         {{ $request->nama }} meminta peminjaman barang {{ $request->barang_dipinjam }}
-                                        <div class="time text-primary">{{ $request->created_at->diffForHumans() }}</div>
+                                        <div class="time text-primary">
+                                            {{ $this->diffForHumans($request->created_at) }}
+                                        </div>
                                     </div>
                                 </a>
                                 @empty

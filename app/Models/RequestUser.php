@@ -9,13 +9,24 @@ class RequestUser extends Model
 {
     protected $table = 'peminjam';
 
-    protected $fillabel = [
-        'id',
+    public $timestamps = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
         'nama',
         'kelas',
         'alamat',
         'email',
         'barang_dipinjam',
-        'total_barang'
+        'total_barang',
+        'tanggal_peminjaman',
+        'tanggal_pengembalian',
+        'status',
+        'catatan',
+        'created_at'
+
     ];
 }
