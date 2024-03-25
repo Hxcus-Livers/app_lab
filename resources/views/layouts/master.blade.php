@@ -32,7 +32,10 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
-    @helper(App\Helpers\diffForHumans)
+    @php
+    use Carbon\Carbon;
+    @endphp
+
     <!-- /END GA -->
 </head>
 
@@ -126,7 +129,7 @@
                                     <div class="dropdown-item-desc">
                                         {{ $request->nama }} meminta peminjaman barang {{ $request->barang_dipinjam }}
                                         <div class="time text-primary">
-                                            {{ $this->diffForHumans($request->created_at) }}
+                                            {{ Carbon::parse($request->created_at)->diffForHumans() }}
                                         </div>
                                     </div>
                                 </a>
@@ -135,7 +138,7 @@
                                 @endforelse
                             </div>
                             <div class="dropdown-footer text-center">
-                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                                <a href="{{ route('request.notice') }}">View All <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </li>

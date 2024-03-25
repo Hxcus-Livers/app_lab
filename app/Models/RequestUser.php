@@ -29,4 +29,10 @@ class RequestUser extends Model
         'created_at'
 
     ];
+
+    public function scopeUnread($query)
+    {
+        return $query->where('dibaca', false);
+    }
+
 }

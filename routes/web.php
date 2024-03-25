@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use App\Models\Barang;
 use App\Models\RequestUser;
 
@@ -22,6 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+Route::post('/send-notification',[HomeController::class,'notification'])->name('notification');
 
 
 Route::middleware([
@@ -42,6 +46,8 @@ Route::middleware([
         Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('item.destroy');
 
         Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+        Route::get('/request/view', [RequestController::class, 'notice'])->name('request.notice');
+        Route::put('/request/view/{id}', [RequestController::class, 'updateStatus'])->name('request.updateStatus');
         Route::get('/request/show', [RequestController::class, 'show'])->name('request.show');
 
         // laporan

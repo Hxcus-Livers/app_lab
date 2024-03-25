@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-striped table-md">
+                            <table class="table table-striped table-md text-center">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -44,7 +44,7 @@
                                         <td>{{ $item->jenisBarang->nama_jenis_barang }}</td>
                                         <td>{{ $item->nama_barang }}</td>
                                         <td>{{ $item->deskripsi }}</td>
-                                        <td class="{{ $item->kondisi == 'Tersedia' ? 'badge badge-success' : 'badge badge-danger' }}  mt-2">{{ $item->kondisi }}</td>
+                                        <td class="{{ $item->status == 'Tersedia' ? 'badge badge-success' : 'badge badge-danger' }}  mt-2">{{ $item->status }}</td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-danger" onclick="
                                                 event.preventDefault();
