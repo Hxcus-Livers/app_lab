@@ -49,17 +49,19 @@
                                     @foreach ($request_user as $item)
                                     <tr>
                                         <td>{{ $item->nama }}</td>
-                                        <td>{{ $item->kelas }}</td>
-                                        <td>{{ $item->barang_dipinjam }}</td>
-                                        <td>{{ $item->total_barang }}</td>
                                         <td>
                                             <form action="{{ route('request.updateStatus', $item->id) }}" method="post">
                                                 @csrf
                                                 @method('put')
-                                                <input type="checkbox" name="delete" value="{{ $item->id }}">
+                                                @if ($item->status === 'approved' && $item->disabled)
+                                                <button type="submit" name="status" value="approved" class="btn btn-sm btn-success disabled">Approved</button>
+                                                <button type="submit" name="status" value="pending" class="btn btn-sm btn-warning disabled">Pending</button>
+                                                <button type="submit" name="status" value="rejected" class="btn btn-sm btn-danger disabled">Rejected</button>
+                                                @else
                                                 <button type="submit" name="status" value="approved" class="btn btn-sm btn-success">Approved</button>
                                                 <button type="submit" name="status" value="pending" class="btn btn-sm btn-warning">Pending</button>
                                                 <button type="submit" name="status" value="rejected" class="btn btn-sm btn-danger">Rejected</button>
+                                                @endif
                                             </form>
                                         </td>
                                     </tr>

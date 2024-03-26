@@ -45,11 +45,6 @@ Route::middleware([
         Route::get('/barang/{barang}', [BarangController::class, 'detail'])->name('item.detail');
         Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('item.destroy');
 
-        Route::get('/request', [RequestController::class, 'index'])->name('request.index');
-        Route::get('/request/view', [RequestController::class, 'notice'])->name('request.notice');
-        Route::put('/request/view/{id}', [RequestController::class, 'updateStatus'])->name('request.updateStatus');
-        Route::get('/request/show', [RequestController::class, 'show'])->name('request.show');
-
         // laporan
         Route::get('/laporan', function () {
             // return 'dashboard admin';
@@ -77,6 +72,6 @@ Route::middleware([
         Route::get('/user/barang/{barang}', [UserController::class, 'detail'])->name('user.detail');
 
         Route::get('/request/create', [RequestController::class, 'create'])->name('request.create');
-        Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
+        Route::post('/requests', [App\Http\Controllers\RequestController::class, 'store'])->name('requests.store');
     });
 });

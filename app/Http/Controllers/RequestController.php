@@ -2,128 +2,121 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
-use Carbon\Carbon;
+use App\Models\Request;
+use App\Models\User; // Jika relasi user didefinisikan di model RequestUser
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Validator;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
-use App\Models\RequestUser;
+use Kreait\Firebase\Messaging\FirebaseMessaging;
+use Firebase\Messaging\Message;
 
 class RequestController extends Controller
 {
-  // public function index()
-  // {
-  //     $requestPeminjaman = RequestUser::where('status', '=', 'pending')
-  //         ->where('dibaca', '=', false)
-  //         ->orderBy('created_at', 'desc')
-  //         ->take(5)
-  //         ->get();
-
-  //     return view('layouts.master', compact('requestPeminjaman'));
-  // }
-
-  // private function diffForHumans($date) {
-  //     if (!$date) {
-  //       return 'N/A (No date available)';
-  //     }
-
-  //     $now = new DateTime();
-  //     $interval = $now->diff($date);
-  //     $elapsed = $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
-
-  //     if ($elapsed < 1) {
-  //       return 'Baru saja';
-  //     } elseif ($elapsed < 60) {
-  //       return $elapsed . ' menit yang lalu';
-  //     } elseif ($elapsed < 120) {
-  //       return 'Sekitar 1 jam yang lalu';
-  //     } elseif ($elapsed < (24 * 60)) {
-  //       return round($elapsed / 60) . ' jam yang lalu';
-  //     } elseif ($elapsed < (2 * 24 * 60)) {
-  //       return 'Kemarin';
-  //     } else {
-  //       return round($elapsed / (24 * 60)) . ' hari yang lalu';
-  //     }
-  //   }      
-
-  public function index()
+  /**
+   * Menyimpan permintaan baru.
+   *
+   * @param  HttpRequest  $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function store(HttpRequest $request)
   {
-    $requestPeminjamanBelumDibaca = Request::where('dibaca', false)->get();
-
-    foreach ($requestPeminjamanBelumDibaca as $request) {
-      $request->timeSinceCreation = Carbon::parse($request->created_at)->diffForHumans();
-    }
-
-    return view('layouts.master', compact('requestPeminjamanBelumDibaca'));
-  }
-
-  public function notice()
-  {
-    $request_user = RequestUser::all();
-
-    return view('admin.view-request', compact('request_user'));
-  }
-
-  public function create()
-  {
-    $request_user = RequestUser::all();
-    return view('request.create', compact('request_user'));
-  }
-
-  public function store(Request $request)
-  {
-    // Validasi input
-    $validatedData = $request->validate([
-      'nama' => 'required|string|max:255',
-      'kelas' => 'required|string|max:10',
-      'alamat' => 'required|string',
-      'barang_dipinjam' => 'required|string',
-      'total_barang' => 'required|integer',
+    $validator = Validator::make($request->all(), [
+      'user_id' => 'required|exists:users,id',
+      'item_name' => 'required|string',
+      'quantity' => 'required|integer',
     ]);
 
-
-    // Buat dan simpan barang baru  
-    RequestUser::create($validatedData);
-
-    // Buat notifikasi untuk admin
-    // $notifikasi = [
-    //     'judul' => 'Permintaan Peminjaman Baru',
-    //     'isi' => 'Permintaan peminjaman baru dari ' . $validatedData['nama'],
-    // ];
-
-
-    // Tampilkan pesan sukses
-    return redirect()->route('user.pinjam')->with('success', 'Permintaan peminjaman berhasil dikirim!');
-  }
-
-  public function show(RequestUser $request_user)
-  {
-    if (!$request_user->dibaca) {
-      $request_user->update(['dibaca' => true]);
+    if ($validator->fails()) {
+      return response()->json($validator->errors(), 422);
     }
 
-    // ... (kode lainnya untuk menampilkan detail request)
+    $validatedData = $validator->validated();
 
-    return view('layouts.master', compact('request_user'));
+    $requests = Request::create($validatedData);
+
+    // Kirim notifikasi FCM ke admin
+    $this->sendNotificationToAdmin($requests);
+
+    return response()->json($requests, 201);
   }
 
-  public function updateStatus(Request $request, $id)
+  /**
+   * Mengirim notifikasi FCM ke admin terkait permintaan baru.
+   *
+   * @param Request $requestUser
+   * @return void
+   */
+  private function sendNotificationToAdmin(Request $requestUser)
   {
-    $request_user = Request::find($id);
+    $firebaseMessaging = app('firebase.messaging');
 
-  if ($request->has('delete')) {
-    // Hapus data dari database
-    $request_user->delete();
+    $message = Message::create()
+      ->setTopic('/topics/admin')
+      ->setData([
+        'type' => 'request',
+        'request_id' => $requestUser->id,
+        'user_name' => $requestUser->user->name ?? '', // Opsional: Menangani relasi user yang mungkin null
+        'item_name' => $requestUser->item_name,
+        'quantity' => $requestUser->quantity,
+      ]);
 
-    return redirect()->route('request.index')->with('success', 'Data berhasil dihapus');
+    try {
+      $firebaseMessaging->send($message);
+    } catch (\Throwable $e) {
+      // Menangani kemungkinan error pengiriman FCM (logging, retries, dll.)
+      report($e);
+    }
   }
 
-    // $request_user = RequestUser::findOrFail($id);
+  /**
+   * Memvalidasi permintaan dan mengirim notifikasi FCM ke user.
+   *
+   * @param HttpRequest $request
+   * @param RequestUser $requestUserModel
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function update(HttpRequest $request, Request $requestUserModel)
+  {
+    $validator = Validator::make($request->all(), [
+      'status' => 'required|in:success,rejected',
+    ]);
 
-    $request_user->status = $request->status;
-    $request_user->save();
+    if ($validator->fails()) {
+      return response()->json($validator->errors(), 422);
+    }
 
-    return redirect()->route('request.notice');
+    $validatedData = $validator->validated();
+    $requestUserModel->update($validatedData);
+
+    // Kirim notifikasi FCM ke user
+    $this->sendNotificationToUser($requestUserModel);
+
+    return response()->json($requestUserModel);
+  }
+
+  /**
+   * Mengirim notifikasi FCM ke user tentang status permintaan.
+   *
+   * @param RequestUser $requestUser
+   * @return void
+   */
+  private function sendNotificationToUser(Request $requestUser)
+  {
+    $firebaseMessaging = app('firebase.messaging');
+
+    $message = Message::create()
+      ->setTopic('/topics/user-' . $requestUser->user_id)
+      ->setData([
+        'type' => 'request_status',
+        'request_id' => $requestUser->id,
+        'status' => $requestUser->status,
+      ]);
+
+    try {
+      $firebaseMessaging->send($message);
+    } catch (\Throwable $e) {
+      // Menangani kemungkinan error pengiriman FCM (logging, retries, dll.)
+      report($e);
+    }
   }
 }

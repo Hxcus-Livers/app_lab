@@ -113,35 +113,6 @@
                     </div>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-                        <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                            <div class="dropdown-header">Notifications
-                                <div class="float-right">
-                                    <a href="#">Mark All As Read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown-list-content dropdown-list-icons">
-                                @forelse ($requestPeminjamanBelumDibaca as $request)
-                                <a href="{{ route('request.show', $request->id) }}" class="dropdown-item dropdown-item-unread">
-                                    <div class="dropdown-item-icon bg-primary text-white">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        {{ $request->nama }} meminta peminjaman barang {{ $request->barang_dipinjam }}
-                                        <div class="time text-primary">
-                                            {{ Carbon::parse($request->created_at)->diffForHumans() }}
-                                        </div>
-                                    </div>
-                                </a>
-                                @empty
-                                <div class="text-center">Tidak ada request peminjaman baru.</div>
-                                @endforelse
-                            </div>
-                            <div class="dropdown-footer text-center">
-                                <a href="{{ route('request.notice') }}">View All <i class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </li>
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>

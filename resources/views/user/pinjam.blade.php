@@ -35,35 +35,22 @@
                             </div>
                             @endif
 
-                            <form action="{{ route('request.store') }}" method="post">
+                            <form action="{{ route('requests.store') }}" method="post">
                                 @csrf
 
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
+                                <div class="form-group">
+                                    <label for="user_id">User ID:</label>
+                                    <input type="number" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}" readonly>
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="kelas" class="form-label">Kelas</label>
-                                    <input type="text" class="form-control" id="kelas" name="kelas" value="{{ old('kelas') }}">
+                                <div class="form-group">
+                                    <label for="item_name" class="form-label">Item Name:</label>
+                                    <input type="text" class="form-control" id="item_name" name="item_name" value="{{ old('item_name') }}">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <textarea class="form-control" id="alamat" name="alamat" rows="3">{{ old('alamat') }}</textarea>
+                                <div class="form-group">
+                                    <label for="quantity" class="form-label">Quantity:</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="barang_dipinjam" class="form-label">Barang yang di Pinjam</label>
-                                    <textarea class="form-control" id="barang_dipinjam" name="barang_dipinjam" rows="3">{{ old('barang_dipinjam') }}</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="total_barang" class="form-label">Total Barang yang di Pinjam</label>
-                                    <input type="number" class="form-control" id="total_barang" name="total_barang" value="{{ old('total_barang') }}">
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary">Submit Request</button>
                             </form>
                         </div>
                     </div>
