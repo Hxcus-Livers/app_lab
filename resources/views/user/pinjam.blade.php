@@ -50,7 +50,60 @@
                                     <label for="quantity" class="form-label">Quantity:</label>
                                     <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit Request</button>
+                                <button type="submit" class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
+
+                                <script>
+                                    function submitRequest() {
+                                        const data = {
+                                            // Extract form data (item_name, quantity, etc.)
+                                            item_name: document.getElementById('item_name').value,
+                                            quantity: document.getElementById('quantity').value,
+                                            // ... other data
+                                        };
+
+                                        fetch('/api/requests', {
+                                                method: 'POST',
+                                                body: JSON.stringify(data),
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    // Send FCM notification to admin
+                                                    const notification = {
+                                                        title: "Permintaan Barang Baru",
+                                                        body: "Sebuah permintaan barang baru diajukan oleh " + data.user.nama,
+                                                        data: {
+                                                            type: "request_barang",
+                                                            requestId: data.request.id,
+                                                        },
+                                                    };
+
+                                                    fetch('/api/fcm/send', {
+                                                            method: 'POST',
+                                                            body: JSON.stringify(notification),
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            }
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            console.log('FCM notification sent:', data);
+                                                        })
+                                                        .catch(error => {
+                                                            console.error('Error sending FCM notification:', error);
+                                                        });
+                                                } else {
+                                                    console.error('Error submitting request:', data.error);
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error sending request:', error);
+                                            });
+                                    }
+                                </script>
                             </form>
                         </div>
                     </div>
@@ -60,6 +113,38 @@
         </div>
     </section>
 </div>
+@endsection
 
+@section('head')
+@parent
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging.js"></script>
+<script>
+    // Your Firebase project configuration (replace with yours)
+    var firebaseConfig = {
+        // ... your firebase config details
+    };
 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Request permission for notifications
+    const messaging = firebase.messaging();
+    messaging.requestPermission()
+        .then(() => {
+            console.log('Notification permission granted.');
+            // Get FCM token
+            return messaging.getToken({
+                vapidKey: 'YOUR_VAPID_KEY'
+            });
+        })
+        .then((token) => {
+            console.log('FCM token:', token);
+            // Send token to server for association with user
+            // (implementation depends on your backend)
+        })
+        .catch((error) => {
+            console.error('Error getting permission:', error);
+        });
+</script>
 @endsection

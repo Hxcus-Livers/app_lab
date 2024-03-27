@@ -8,6 +8,23 @@ use Kutia\Larafirebase\Facades\Larafirebase;
 
 class HomeController extends Controller
 {
+    public function storeToken(Request $request)
+    {
+        // Validate request
+        $request->validate([
+            'token' => 'required|string'
+        ]);
+
+        // Store token in database (implement your logic)
+        $user = User::find(auth()->id()); // Replace with your user model access logic
+        $user->fcm_token = $request->token;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
     public function updateToken(Request $request)
     {
         try {

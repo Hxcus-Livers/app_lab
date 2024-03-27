@@ -162,3 +162,35 @@
         </section>
       </div>
 @endsection
+
+@section('head')
+    @parent
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging.js"></script>
+    <script>
+        // Your Firebase project configuration (replace with yours)
+        var firebaseConfig = {
+            // ... your firebase config details
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Request permission for notifications
+        const messaging = firebase.messaging();
+        messaging.requestPermission()
+            .then(() => {
+                console.log('Notification permission granted.');
+                // Get FCM token
+                return messaging.getToken({ vapidKey: 'YOUR_VAPID_KEY' });
+            })
+            .then((token) => {
+                console.log('FCM token:', token);
+                // Send token to server for association with user
+                // (implementation depends on your backend)
+            })
+            .catch((error) => {
+                console.error('Error getting permission:', error);
+            });
+    </script>
+@endsection

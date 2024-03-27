@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
@@ -20,12 +21,26 @@ use App\Models\RequestUser;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Route::get('/dashboard', function () {
+    if (auth()->check()) {
+        $user = auth()->user();
+        if ($user->role_id === 1) { // Ganti 1 dengan ID role admin
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('dashboard_user');
+        }
+    }
+    return redirect()->route('login');
+});
+
+Route::post('/fcm-token', 'FcmController@storeToken')->name('fcmToken');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
-Route::post('/send-notification',[HomeController::class,'notification'])->name('notification');
+Route::post('/send-notification', [HomeController::class, 'notification'])->name('notification');
 
 
 Route::middleware([
@@ -35,6 +50,7 @@ Route::middleware([
 ])->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::get('/dashboard', function () {
+
             // return 'dashboard admin';
             return view('admin.dashboard');
         })->name('dashboard');

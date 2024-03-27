@@ -50,7 +50,7 @@
                 <thead>
                   <tr>
                     <th>Jenis Barang</th>
-                    <th>Total</th>
+                    <th>Tersedia</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -58,7 +58,7 @@
                   @foreach ($jenis_barang as $item)
                   <tr>
                     <td>{{ $item->nama_jenis_barang }}</td>
-                    <td>{{ $item->total }}</td>
+                    <td>{{ $item->total_barang }}</td>
                     <td>
                       <a href="{{ route('item.detail', $item->id) }}" class="btn btn-sm btn-info">Detail</a>
                     </td>

@@ -27,4 +27,9 @@ class JenisBarang extends Model
     {
         return $this->hasMany(Barang::class, 'jenis_barang_id');
     }
+
+    public function getTotalBarangAttribute()
+    {
+        return $this->barang()->count();
+    }
 }

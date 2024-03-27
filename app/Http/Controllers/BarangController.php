@@ -17,7 +17,7 @@ class BarangController extends Controller
     public function index(): Response
     {
         // $barang = Barang::with('jenis_barang')->get();
-        $jenis_barang = JenisBarang::all();
+        $jenis_barang = JenisBarang::with('barang')->get();
         // echo'<pre>';
         // print_r($barang);die;
         // echo'</pre>';
