@@ -35,7 +35,7 @@
                             </div>
                             @endif
 
-                            <form action="{{ route('requests.store') }}" method="post">
+                            <form id="request-form" action="{{ route('requests.store') }}" method="post">
                                 @csrf
 
                                 <div class="form-group">
@@ -51,56 +51,22 @@
                                     <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
-
                                 <script>
                                     function submitRequest() {
-                                        const data = {
-                                            // Extract form data (item_name, quantity, etc.)
-                                            item_name: document.getElementById('item_name').value,
-                                            quantity: document.getElementById('quantity').value,
-                                            // ... other data
-                                        };
+                                        const form = document.getElementById('request-form'); // Replace with your form ID
+                                        const formData = new FormData(form);
 
-                                        fetch('/api/requests', {
+                                        fetch('/send-notification', {
                                                 method: 'POST',
-                                                body: JSON.stringify(data),
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                }
+                                                body: formData
                                             })
                                             .then(response => response.json())
                                             .then(data => {
-                                                if (data.success) {
-                                                    // Send FCM notification to admin
-                                                    const notification = {
-                                                        title: "Permintaan Barang Baru",
-                                                        body: "Sebuah permintaan barang baru diajukan oleh " + data.user.nama,
-                                                        data: {
-                                                            type: "request_barang",
-                                                            requestId: data.request.id,
-                                                        },
-                                                    };
-
-                                                    fetch('/api/fcm/send', {
-                                                            method: 'POST',
-                                                            body: JSON.stringify(notification),
-                                                            headers: {
-                                                                'Content-Type': 'application/json'
-                                                            }
-                                                        })
-                                                        .then(response => response.json())
-                                                        .then(data => {
-                                                            console.log('FCM notification sent:', data);
-                                                        })
-                                                        .catch(error => {
-                                                            console.error('Error sending FCM notification:', error);
-                                                        });
-                                                } else {
-                                                    console.error('Error submitting request:', data.error);
-                                                }
+                                                // Handle success or error response from the server
+                                                console.log(data);
                                             })
                                             .catch(error => {
-                                                console.error('Error sending request:', error);
+                                                console.error(error);
                                             });
                                     }
                                 </script>
@@ -109,13 +75,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 </div>
 @endsection
 
-@section('head')
+<!-- @section('head')
 @parent
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging.js"></script>
@@ -135,7 +100,7 @@
             console.log('Notification permission granted.');
             // Get FCM token
             return messaging.getToken({
-                vapidKey: 'YOUR_VAPID_KEY'
+                vapidKey: 'BLJm9QYztzs0wAbM9RmXIo6xf3Nk32Ks437-Hfbe8nIVwJJmB9Gg81uBWcs4ICrFNg8GTz3dqlOguCvF55XGdCE'
             });
         })
         .then((token) => {
@@ -147,4 +112,4 @@
             console.error('Error getting permission:', error);
         });
 </script>
-@endsection
+@endsection -->

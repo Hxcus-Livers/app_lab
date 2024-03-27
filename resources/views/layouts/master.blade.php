@@ -238,7 +238,7 @@
         function initFirebaseMessagingRegistration() {
             messaging.requestPermission().then(function() {
                 return messaging.getToken({
-                    vapidKey: 'YOUR_VAPID_KEY'
+                    vapidKey: 'BLJm9QYztzs0wAbM9RmXIo6xf3Nk32Ks437-Hfbe8nIVwJJmB9Gg81uBWcs4ICrFNg8GTz3dqlOguCvF55XGdCE'
                 }); // Replace with your VAPID key
             }).then(function(token) {
                 console.log('FCM token:', token);

@@ -43,6 +43,7 @@ class BarangController extends Controller
             'nama_barang' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'jenis_barang_id' => 'required|exists:jenis_barang,id',
+            'total' => 'required|int|max:5',
         ]);
 
         // Buat dan simpan barang baru  

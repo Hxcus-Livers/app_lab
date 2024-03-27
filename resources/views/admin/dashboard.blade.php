@@ -182,7 +182,7 @@
             .then(() => {
                 console.log('Notification permission granted.');
                 // Get FCM token
-                return messaging.getToken({ vapidKey: 'YOUR_VAPID_KEY' });
+                return messaging.getToken({ vapidKey: 'BLJm9QYztzs0wAbM9RmXIo6xf3Nk32Ks437-Hfbe8nIVwJJmB9Gg81uBWcs4ICrFNg8GTz3dqlOguCvF55XGdCE' });
             })
             .then((token) => {
                 console.log('FCM token:', token);

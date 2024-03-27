@@ -21,26 +21,14 @@ use App\Models\RequestUser;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-});
-
-Route::get('/dashboard', function () {
-    if (auth()->check()) {
-        $user = auth()->user();
-        if ($user->role_id === 1) { // Ganti 1 dengan ID role admin
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('dashboard_user');
-        }
-    }
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 Route::post('/fcm-token', 'FcmController@storeToken')->name('fcmToken');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
-Route::post('/send-notification', [HomeController::class, 'notification'])->name('notification');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+Route::post('/send-notification', [RequestController::class, 'notification'])->name('notification');
 
 
 Route::middleware([
