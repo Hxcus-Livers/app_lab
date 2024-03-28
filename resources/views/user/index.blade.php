@@ -39,7 +39,7 @@
                     <td>{{ $item->nama_jenis_barang }}</td>
                     <td>{{ $item->total_barang }}</td>
                     <td>
-                      <a href="{{ route('user.detail', $item->id) }}" class="btn btn-sm btn-info">Detail</a>
+                      <a href="{{ route('low-user.detail', $item->id) }}" class="btn btn-sm btn-info">Detail</a>
                     </td>
                   </tr>
                   @endforeach

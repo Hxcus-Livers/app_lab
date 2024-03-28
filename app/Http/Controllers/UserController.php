@@ -19,7 +19,7 @@ class UserController extends Controller
         // echo'</pre>';
         // dd($barang);
         // die;
-        return response(view('user.index', ['jenis_barang' => $jenis_barang]));
+        return response(view('low-user.index', ['jenis_barang' => $jenis_barang]));
     }
 
     public function detail($id)
@@ -30,6 +30,6 @@ class UserController extends Controller
         // dd($barang);
 
 
-        return view('user.detail', compact('barang'));
+        return view('low-user.detail', compact('barang'));
     }
 }

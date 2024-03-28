@@ -1,13 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
-use App\Models\Barang;
-use App\Models\RequestUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +19,6 @@ use App\Models\RequestUser;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::post('/fcm-token', 'FcmController@storeToken')->name('fcmToken');
-
-// Route::get('/home', [HomeController::class, 'index'])->name('home');
-// Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
-Route::post('/send-notification', [RequestController::class, 'notification'])->name('notification');
 
 
 Route::middleware([

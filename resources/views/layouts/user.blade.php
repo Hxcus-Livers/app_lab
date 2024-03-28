@@ -86,25 +86,6 @@
                                     Headphone Blitz
                                 </a>
                             </div>
-                            <div class="search-header">
-                                Projects
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <div class="search-icon bg-danger text-white mr-3">
-                                        <i class="fas fa-code"></i>
-                                    </div>
-                                    Stisla Admin Template
-                                </a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <div class="search-icon bg-primary text-white mr-3">
-                                        <i class="fas fa-laptop"></i>
-                                    </div>
-                                    Create a new Homepage Design
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -168,7 +149,7 @@
                         <a href="{{ route('dashboard_user') }}">LAB</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="{{ route('dashboard_user') }}"><img src="{{ asset('assets/img/logo-antarika.png')}}" width="40%"></a>
+                        <a href="{{ route('dashboard_user') }}"><img src="{{ asset('assets/img/Logo-H.png')}}" width="60%"></a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
@@ -227,68 +208,6 @@
     <!-- Template JS File -->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-    https://firebase.google.com/docs/web/setup#available-libraries -->
-
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyCMsVgp_a8yTZWDje-ihAZmxaqvu-CJyIo",
-            authDomain: "app-lab-90759.firebaseapp.com",
-            projectId: "app-lab-90759",
-            storageBucket: "app-lab-90759.appspot.com",
-            messagingSenderId: "184716463926",
-            appId: "1:184716463926:web:933d046b34148b79ddad97",
-            measurementId: "G-GJQEWGRBMZ"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const messaging = firebase.messaging();
-
-        function initFirebaseMessagingRegistration() {
-            messaging.requestPermission().then(function() {
-                return messaging.getToken()
-            }).then(function(token) {
-
-                // axios.post("{{ route('fcmToken') }}", {
-                //     _method: "PATCH",
-                //     token
-                // }).then(({
-                //     data
-                // }) => {
-                //     console.log(data)
-                // }).catch(({
-                //     response: {
-                //         data
-                //     }
-                // }) => {
-                //     console.error(data)
-                // })
-
-            }).catch(function(err) {
-                console.log(`Token Error :: ${err}`);
-            });
-        }
-
-        initFirebaseMessagingRegistration();
-
-        messaging.onMessage(function({
-            data: {
-                body,
-                title
-            }
-        }) {
-            new Notification(title, {
-                body
-            });
-        });
-    </script>
 
 </body>
 

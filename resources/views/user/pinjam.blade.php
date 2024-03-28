@@ -38,10 +38,10 @@
                             <form id="request-form" action="{{ route('requests.store') }}" method="post">
                                 @csrf
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="user_id">User ID:</label>
                                     <input type="number" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}" readonly>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="item_name" class="form-label">Item Name:</label>
                                     <input type="text" class="form-control" id="item_name" name="item_name" value="{{ old('item_name') }}">
