@@ -44,7 +44,23 @@ class BarangController extends Controller
             'deskripsi' => 'nullable|string',
             'jenis_barang_id' => 'required|exists:jenis_barang,id',
             'total' => 'required|int|max:5',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        if ($request->has('image')) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+    
+            $filename = time() . '.' . $extension;
+    
+            $path = 'uploads/barang/' . $filename;  // Construct the complete path
+    
+            $file->move($path, $filename);
+    
+            $validatedData['image'] = $path;  // Save the complete path in 'image' column
+        }
+    
 
         // Buat dan simpan barang baru  
         Barang::create($validatedData);

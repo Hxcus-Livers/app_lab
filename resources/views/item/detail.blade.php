@@ -33,6 +33,7 @@
                                         <th>Jenis Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Deskripsi</th>
+                                        <th>Image</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -44,6 +45,13 @@
                                         <td>{{ $item->jenisBarang->nama_jenis_barang }}</td>
                                         <td>{{ $item->nama_barang }}</td>
                                         <td>{{ $item->deskripsi }}</td>
+                                        <td>
+                                            @if($item->image)
+                                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->nama_barang }} image" style="width: 100px; height: auto;">
+                                            @else
+                                            No Image Available
+                                            @endif
+                                        </td>
                                         <td class="{{ $item->status == 'Tersedia' ? 'badge badge-success' : 'badge badge-danger' }}  mt-2">{{ $item->status }}</td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-danger" onclick="

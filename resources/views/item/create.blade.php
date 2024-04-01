@@ -35,7 +35,7 @@
               </div>
               @endif
 
-              <form method="POST" action="{{ route('item.store') }}">
+              <form method="POST" action="{{ route('item.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -60,6 +60,11 @@
                 <div class="mb-3">
                   <label for="total" class="form-label">Jumlah</label>
                   <input type="number" class="form-control" id="total" name="total" value="{{ old('total') }}">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Upload Fils / Image</label>
+                  <input type="file" name="image" class="form-control">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>

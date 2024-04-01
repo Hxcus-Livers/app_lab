@@ -20,6 +20,7 @@ class Barang extends Model
         'nama_barang',
         'deskripsi',
         'total',
+        'image',
         'created_at',
         'updated_at'
     ];
@@ -28,4 +29,5 @@ class Barang extends Model
     {
         return $this->belongsTo(JenisBarang::class, 'jenis_barang_id');
     }
+    
 }
